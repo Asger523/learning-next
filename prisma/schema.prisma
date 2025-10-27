@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Locations {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  region    String
+  country   String
+  timezone  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  reports   Reports[]
+}
+
+model Conditions {
+  id          Int        @id @default(autoincrement())
+  text        String   
+  icon        String   
+  code        Int        @unique
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  reports     Reports[]
+}
+
+model Reports {
+  id                   Int        @id @default(autoincrement())
+  locationId           Int
+  conditionId          Int
+  temperature          Float
+  feelsLikeTemperature Float
+  windKph              Float
+  gustKph              Float
+  humidity             Int
+  uvIndex              Float
+  lastUpdatedAt        DateTime
+  createdAt            DateTime   @default(now())
+  updatedAt            DateTime   @updatedAt
+
+  location             Locations  @relation(fields: [locationId], references: [id])
+  condition            Conditions @relation(fields: [conditionId], references: [id])
+
+  @@unique([locationId, lastUpdatedAt])
+}
