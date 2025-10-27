@@ -1,0 +1,16 @@
+{
+  // Suppress "Unknown at rule" diagnostics for custom at-rules like @theme
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore",
+
+  // Optionally, if using Tailwind or other processors, enable the built-in formatter/linting behavior
+  // so CSS features from PostCSS/ Tailwind don't trigger errors. Uncomment if needed:
+  // "css.validate": false,
+
+  // Workbench settings for this workspace
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true
+  }
+}
